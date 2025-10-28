@@ -1,3 +1,14 @@
+Nombres:
+"Ojos industriales: un pipeline modular para detectar, explicar y clasificar anomalías"
+
+"Perspectivas contrastivas: detección explicable de anomalías en inspección visual industrial"
+
+"Tendiendo puentes entre detección y explicación: un pipeline multi-etapa para anomalías industriales"
+
+"Atlas de anomalías: detección, localización y clasificación contrastiva en imágenes industriales"
+
+"Detección explicable de anomalías industriales: de Grad-CAM a embeddings contrastivos"
+
 # Proyecto: Detección y Localización de Anomalías en Procesos Industriales con MVTec AD
 
 ## Descripción
