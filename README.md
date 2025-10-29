@@ -13,7 +13,7 @@
 
 ## Description
 
-This project uses the **HAM10000 dataset**, a collection of dermatoscopic images with seven different types of skin lesions. The main goal is to develop a hierarchical pipeline capable of:
+This project uses the [**HAM10000 dataset**](https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000), a collection of dermatoscopic images with seven different types of skin lesions. The main goal is to develop a hierarchical pipeline capable of:
 
 1. Classifying the type of skin lesion using a contrastive learning approach.
 2. Visualizing the regions responsible for the model’s prediction through Grad-CAM.
