@@ -22,10 +22,6 @@
 - [ ] Clasificar con k-NN o lineal
 - [ ] Visualizar con t-SNE / UMAP
 
-## Grad-CAM en modelo contrastivo
-- [ ] Evaluar si se puede aplicar Grad-CAM al backbone
-- [ ] Probar sobre encoder + clasificador lineal
-
 ## Zero-shot con clase maligna no vista
 - [ ] Seleccionar clase menos representada
 - [ ] Evaluar rendimiento en modo zero-shot
