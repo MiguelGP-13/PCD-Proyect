@@ -19,11 +19,13 @@
 ## Clasificación contrastiva
 - [ ] Entrenar modelo contrastivo (SupConLoss)
 - [ ] Generar embeddings
-- [ ] Clasificar con k-NN o lineal
+- [ ] Clasificar con k-NN o lineal (?)
 - [ ] Visualizar con t-SNE / UMAP
 
-## Zero-shot con clase maligna no vista
-- [ ] Seleccionar clase menos representada
+## Zero-shot con clase maligna no vista [Nuevo Dataset](https://challenge.isic-archive.com/data/#2018)
+
+- [ ] Seleccionar clase menos representada (si es muy muy pequeña)
+- [ ] Incluir nueva clase con pocos ejemplos
 - [ ] Evaluar rendimiento en modo zero-shot
 
 ## Ampliaciones
