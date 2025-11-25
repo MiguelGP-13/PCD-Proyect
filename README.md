@@ -17,7 +17,7 @@
 - [ ] Documentar visualizaciones
 
 ## Clasificación contrastiva
-- [ ] Entrenar modelo contrastivo (SupConLoss)
+- [x] Entrenar modelo contrastivo (SupConLoss)
 - [ ] Generar embeddings
 - [ ] Clasificar con k-NN o lineal (?)
 - [ ] Visualizar con t-SNE / UMAP
