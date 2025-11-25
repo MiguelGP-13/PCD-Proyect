@@ -5,7 +5,7 @@
 - [x] Transfer learning con VGG16
 - [x] Transfer learning con ResNet50
 - [x] Transfer learning con InceptionV3
-- [ ] Tener todos entrenados y guardados
+- [x] Tener todos entrenados y guardados
   
 
 - [ ] Comparar métricas
@@ -24,9 +24,8 @@
 
 ## Zero-shot con clase maligna no vista [Nuevo Dataset](https://challenge.isic-archive.com/data/#2018)
 
-- [ ] Seleccionar clase menos representada (si es muy muy pequeña)
 - [ ] Incluir nueva clase con pocos ejemplos
-- [ ] Evaluar rendimiento en modo zero-shot
+- [ ] Evaluar rendimiento en modo few-shot
 
 ## Ampliaciones
 - [ ] Few-shot learning
