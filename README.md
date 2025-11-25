@@ -1,5 +1,8 @@
 # TODO - Proyecto HAM10000
 
+## Clasificación full
+- [ ] Ver cuanto da (colab)
+
 ## Clasificación binaria
 - [x] Entrenar modelo desde cero
 - [x] Transfer learning con VGG16
@@ -9,7 +12,6 @@
   
 
 - [ ] Comparar métricas
-- [ ] Aplicar distillation al mejor modelo
 
 ## Grad-CAM
 - [ ] Aplicar Grad-CAM al mejor modelo binario
@@ -18,19 +20,15 @@
 
 ## Clasificación contrastiva
 - [x] Entrenar modelo contrastivo (SupConLoss)
-- [ ] Generar embeddings
-- [ ] Clasificar con k-NN o lineal (?)
+- [x] Generar embeddings
+- [x] Clasificar con k-NN o lineal (?) Da 60%, explicar comparacion entre supConloss y por pares
+- [ ] Probar ml normal en malignas
 - [ ] Visualizar con t-SNE / UMAP
 
 ## Zero-shot con clase maligna no vista [Nuevo Dataset](https://challenge.isic-archive.com/data/#2018)
-
+- No creo que de tiempo
 - [ ] Incluir nueva clase con pocos ejemplos
 - [ ] Evaluar rendimiento en modo few-shot
-
-## Ampliaciones
-- [ ] Few-shot learning
-- [ ] Búsqueda por similitud
-- [ ] Embeddings centrados en regiones relevantes
 
 
 “Dermascope: un pipeline contrastivo para detección explicable de lesiones cutáneas”
