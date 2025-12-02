@@ -1,7 +1,9 @@
 # TODO - Proyecto HAM10000
 
 ## Clasificación full
-- [ ] Ver cuanto da (colab)
+- [x] Probar desde cero
+- [x] Probar fine tuning con VGG19
+- [x] Comparar con pipeline
 
 ## Clasificación binaria
 - [x] Entrenar modelo desde cero
