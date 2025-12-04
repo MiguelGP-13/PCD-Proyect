@@ -1,7 +1,9 @@
 # TODO - Proyecto HAM10000
 
 ## Clasificación full
-- [ ] Ver cuanto da (colab)
+- [x] Probar desde cero
+- [x] Probar fine tuning con VGG19
+- [x] Comparar con pipeline
 
 ## Clasificación binaria
 - [x] Entrenar modelo desde cero
@@ -11,36 +13,19 @@
 - [x] Tener todos entrenados y guardados
   
 
-- [ ] Comparar métricas
+- [x] Comparar métricas
 
 ## Grad-CAM
-- [ ] Aplicar Grad-CAM al mejor modelo binario
-- [ ] Generar imágenes interpretativas
-- [ ] Documentar visualizaciones
+- [x] Aplicar Grad-CAM al mejor modelo binario
+- [x] Generar imágenes interpretativas
+- [x] Documentar visualizaciones
 
 ## Clasificación contrastiva
 - [x] Entrenar modelo contrastivo (SupConLoss)
 - [x] Generar embeddings
 - [x] Clasificar con k-NN o lineal (?) Da 60%, explicar comparacion entre supConloss y por pares
-- [ ] Probar ml normal en malignas
+- [x] Probar ml normal en malignas
 - [ ] Visualizar con t-SNE / UMAP
-
-## Zero-shot con clase maligna no vista [Nuevo Dataset](https://challenge.isic-archive.com/data/#2018)
-- No creo que de tiempo
-- [ ] Incluir nueva clase con pocos ejemplos
-- [ ] Evaluar rendimiento en modo few-shot
-
-
-“Dermascope: un pipeline contrastivo para detección explicable de lesiones cutáneas”
-
-“Atlas cutáneo: de embeddings contrastivos a Grad-CAM en clasificación de anomalías dermatológicas”
-
-“Perspectivas semánticas: análisis y visualización de anomalías cutáneas mediante aprendizaje contrastivo”
-
-“Conexiones entre lesiones: detección, interpretación y similitud de anomalías cutáneas”
-
-“Detección explicable de lesiones cutáneas: de Grad-CAM a embeddings contrastivos”
-
 
 # Proyecto: Clasificación e Interpretabilidad de Lesiones Cutáneas con HAM10000
 
@@ -76,14 +61,8 @@ Este proyecto utiliza el dataset [**HAM10000**](https://www.kaggle.com/datasets/
 - Generación de embeddings para cada tipo de lesión maligna.
 - Clasificación con k-NN o clasificador lineal sobre embeddings.
 
-### 4. Prueba con clase maligna no vista (no hay suficientes)
+### 4. Ampliaciones
 
-- Selección de la clase menos representada (ej. df o vasc).
-- Evaluación del rendimiento del modelo contrastivo en modo zero-shot.
-
-### 6. Ampliaciones
-
-- Few-shot / zero-shot classification.
 - Visualización de embeddings con t-SNE / UMAP.
 - Búsqueda interactiva por similitud.
 - Embeddings específicos de regiones relevantes (Grad-CAM + contrastivo).
