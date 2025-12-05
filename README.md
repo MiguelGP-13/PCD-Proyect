@@ -25,7 +25,7 @@
 - [x] Generar embeddings
 - [x] Clasificar con k-NN o lineal (?) Da 60%, explicar comparacion entre supConloss y por pares
 - [x] Probar ml normal en malignas
-- [ ] Visualizar con t-SNE / UMAP
+- [x] Visualizar con t-SNE / UMAP
 
 # Proyecto: Clasificación e Interpretabilidad de Lesiones Cutáneas con HAM10000
 
