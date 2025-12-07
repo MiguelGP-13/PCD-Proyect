@@ -1,0 +1,16 @@
+\vspace{0cm}
+% Discussion
+\section{Discusión}
+
+Desde la perspectiva clínica, la mejora en la detección de lesiones malignas es de gran importancia, siendo la correcta diferenciación entre benignas y malignas el aspecto más crítico en la práctica dermatológica. 
+
+Los resultados obtenidos en este estudio muestran que el pipeline jerárquico ha ofrecido un rendimiento superior al modelo multiclase directo. Aunque la diferencia no es muy grande, la separación inicial entre lesiones benignas y malignas parece favorecer la sensibilidad hacia las categorías minoritarias, lo que resulta especialmente relevante en contextos clínicos. Además, el pipeline puede aportar flexibilidad para incorporar nuevas clases malignas sin necesidad de reentrenar el sistema completo.
+
+La incorporación de Grad-CAM contribuye a que el modelo pueda ser utilizado como apoyo al médico, al permitir validar las predicciones mediante la visualización de las regiones más relevantes en la decisión del sistema.
+
+En el plano técnico, las estrategias de reponderación y aumento de datos han sido determinantes para mitigar el desequilibrio del \textit{dataset} HAM10000, mejorando la sensibilidad hacia las clases minoritarias. Asimismo, el aprendizaje contrastivo supervisado combinado con un clasificador KNN sobre los \textit{embeddings} ha mostrado resultados competitivos frente a enfoques de aprendizaje profundo con convolucionales, aunque el contraste por pares no logró converger en nuestros experimentos. Resulta especialmente llamativo que el KNN aplicado sobre los \textit{embeddings} haya alcanzado un rendimiento superior al obtenido mediante la comparación directa de distancias en modelos contrastivos, e incluso comparable al de un modelo convolucional entrenado específicamente para la tarea. Este hallazgo sugiere que la calidad de las representaciones aprendidas puede ser más determinante que la complejidad del clasificador utilizado.
+
+
+\subsection*{Trabajo futuro}
+Como línea de investigación futura, sería interesante explorar enfoques de \textit{few-shot learning} orientados a la incorporación de nuevas clases malignas dentro del pipeline sin necesidad de un reentrenamiento completo. Este tipo de técnicas permitiría ampliar la cobertura del sistema hacia categorías poco representadas, manteniendo la flexibilidad del enfoque jerárquico. En particular, aplicar \textit{few-shot} al aprendizaje contrastivo podría facilitar la integración de nuevas clases de lesiones malignas y reforzar la utilidad clínica del modelo en escenarios más diversos. Asimismo, validar el pipeline en otros conjuntos de datos clínicos será necesario para confirmar su robustez y transferibilidad.
+

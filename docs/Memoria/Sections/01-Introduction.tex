@@ -1,0 +1,25 @@
+% Introducción
+\section{Introducción}
+
+El cáncer de piel es uno de los tipos de cáncer más frecuentes a nivel mundial, siendo el melanoma su variante más agresiva y potencialmente mortal \cite{Apalla2017}. La detección temprana y la clasificación precisa de las lesiones cutáneas son fundamentales para mejorar el pronóstico y la eficacia del tratamiento. Sin embargo, el diagnóstico manual basado en imágenes dermatoscópicas presenta desafíos importantes debido a la similitud visual entre lesiones benignas y malignas, la variabilidad entre especialistas y la necesidad de experiencia clínica especializada. La creciente incidencia del melanoma y la limitada disponibilidad de especialistas en muchas regiones hacen que la implementación de sistemas automáticos de apoyo al diagnóstico pueda ser útil.
+
+En los últimos años, las técnicas de aprendizaje profundo han demostrado ser prometedoras para automatizar la clasificación de lesiones cutáneas, alcanzando rendimientos comparables a los de dermatólogos expertos. Entre estas técnicas, el aprendizaje contrastivo ha emergido como una estrategia eficaz para generar representaciones robustas y semánticamente significativas, especialmente en contextos con datos etiquetados limitados y distribuciones desbalanceadas.
+
+Este trabajo presenta un estudio comparativo sobre la clasificación automática de lesiones cutáneas utilizando el conjunto de datos HAM10000 \cite{Tschandl2018}. El uso de este dataset estandarizado permite evaluar de manera objetiva diferentes metodologías, fomentando la reproducibilidad y la comparación justa entre enfoques. En este contexto, el aprendizaje profundo no solo ofrece mejoras en precisión, sino también la posibilidad de desarrollar herramientas escalables e interpretables que contribuyan a una atención médica más equitativa y con potencial relevancia clínica como apoyo al diagnóstico dermatológico.
+
+El código fuente utilizado en este trabajo, junto con la reproducción de resultados, está disponible públicamente\footnote{\url{https://github.com/MiguelGP-13/PCD-Proyect}}.
+
+\vspace{1cm}
+% Contribuciones
+\subsection{Contribuciones}
+
+Las principales contribuciones de este trabajo son las siguientes:
+
+\begin{itemize}
+  \item Se realiza un estudio comparativo entre un pipeline jerárquico y un modelo multiclase directo, evaluando su impacto en la clasificación de lesiones cutáneas.
+  \item En la primera etapa del pipeline jerárquico, se aborda la clasificación binaria entre lesiones benignas y malignas, con especial énfasis en mejorar la detección de las lesiones malignas, que se encuentran infrarepresentadas en el dataset.
+  \item Se aplican técnicas de reponderación y aumento de datos para mitigar el desequilibrio de clases y mejorar la sensibilidad hacia las categorías minoritarias.
+  \item En la segunda etapa, se comparan enfoques basados en aprendizaje contrastivo frente a alternativas no contrastivas para la clasificación multiclase de las lesiones malignas, analizando su capacidad para generar representaciones discriminativas.
+  \item Se realiza un análisis visual de los \textit{embeddings} para explorar relaciones entre lesiones malignas, formación de clústeres e identificación de casos ambiguos.
+  \item Se incorpora Grad-CAM (Gradientweighted Class Activation Mapping) como herramienta de interpretación, permitiendo visualizar las regiones más relevantes en las predicciones y facilitar la validación clínica.
+\end{itemize}

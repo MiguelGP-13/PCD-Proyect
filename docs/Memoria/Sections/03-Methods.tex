@@ -1,0 +1,96 @@
+\section{Metodología}
+
+Este trabajo propone un estudio comparativo sobre la clasificación de lesiones cutáneas utilizando el conjunto de datos HAM10000. Se analizan dos enfoques principales: un \textbf{pipeline jerárquico}, compuesto por dos etapas consecutivas, comparándolo con un \textbf{modelo multiclase único} que clasifica todas las lesiones en una sola etapa. El objetivo es evaluar qué estrategia resulta más eficaz para la detección de lesiones malignas, que se encuentran infrarepresentadas en el \textit{dataset}. A continuación se detallan los enfoques utilizados en cada caso.
+
+\subsection{Clasificación binaria: lesión benigna vs maligna}
+
+La primera etapa del pipeline jerárquico tiene como objetivo distinguir entre lesiones benignas y malignas. Para esta tarea se comparó el entrenamiento desde cero frente al transfer learning. Dado el desbalanceo del \textit{dataset}, se aplicaron técnicas de reponderación de clases y aumento de datos para mitigar la disparidad entre categorías y mejorar la sensibilidad hacia las lesiones malignas.
+
+\subsubsection{Entrenamiento desde cero}
+
+Inicialmente se entrenó una red convolucional desde cero utilizando el conjunto de datos HAM10000. A pesar de aplicar técnicas de regularización y ajuste de hiperparámetros, el modelo no logró alcanzar métricas de rendimiento satisfactorias. Esto se atribuye a la complejidad visual de las lesiones cutáneas, lo que motivó la exploración de enfoques más robustos.
+
+\subsubsection{Transfer learning}
+
+Se implementaron modelos preentrenados sobre ImageNet para aprovechar representaciones previamente aprendidas. Se evaluaron tres arquitecturas: VGG16, ResNet50 e InceptionV3, todas adaptadas para aceptar imágenes de tamaño \(224 \times 224\) píxeles. Se congelaron las capas convolucionales iniciales y se entrenaron las capas superiores para la tarea binaria. Este enfoque mejoró significativamente la precisión y la estabilidad del entrenamiento.
+
+\subsection{Grad-CAM}
+
+Para mejorar la interpretabilidad del modelo en la etapa de clasificación binaria, se aplicó la técnica Grad-CAM sobre el modelo con mejor rendimiento: VGG16 con transferencia de aprendizaje. Grad-CAM permite visualizar las regiones de la imagen que más influyen en la decisión del modelo, proporcionando una explicación visual de las predicciones.
+
+Esta técnica genera mapas de calor superpuestos sobre las imágenes originales, destacando las áreas que el modelo considera más relevantes para clasificar una lesión como benigna o maligna. De este modo, se facilita la validación clínica del sistema y se promueve la confianza en su uso como herramienta de apoyo diagnóstico.
+
+\subsection{Clasificación multiclase: contrastivo vs. no contrastivo}
+
+Las muestras clasificadas como malignas en la primera etapa del pipeline se procesan en una segunda etapa multiclase. Aquí se comparan tres enfoques principales:
+
+\begin{enumerate}
+  \item \textbf{Contrastivo por pares}: basado en la construcción explícita de parejas de muestras, donde cada par se etiqueta como positivo si ambas imágenes pertenecen a la misma clase o como negativo si corresponden a clases distintas. La función de pérdida busca minimizar la distancia entre los \textit{embeddings} de los pares positivos y maximizar la distancia entre los negativos mediante un margen fijo.
+  \item \textbf{Contrastivo supervisado}: basado en aprendizaje contrastivo supervisado (SupConLoss \cite{Khosla2020}), que aprovecha el contexto completo del \textit{batch} para generar \textit{embeddings} discriminadores y capturar similitudes semánticas entre lesiones.
+  \item \textbf{No contrastivo}: basado en pérdida de entropía cruzada estándar, que sirve como referencia para evaluar el beneficio del enfoque contrastivo.
+\end{enumerate}
+
+\subsubsection{Función de pérdida SupConLoss}
+
+En el enfoque contrastivo supervisado se emplea la pérdida SupConLoss, que utiliza las etiquetas para distinguir entre pares de muestras de la misma clase (positivos) y de clases distintas (negativos).  
+
+Dado un \textit{batch} de $B$ muestras con \textit{embeddings} $\mathbf{z}_i \in \mathbb{R}^D$ y etiquetas $y_i$, los \textit{embeddings} se normalizan mediante $\ell_2$ para evitar que la magnitud de los vectores afecte a la comparación:
+
+
+
+\[
+\tilde{\mathbf{z}}_i = \frac{\mathbf{z}_i}{\|\mathbf{z}_i\|_2}.
+\]
+
+
+
+La similitud entre dos muestras se calcula como:
+
+
+
+\[
+S_{ij} = \frac{\tilde{\mathbf{z}}_i \cdot \tilde{\mathbf{z}}_j}{\tau}, \quad S \in \mathbb{R}^{B \times B},
+\]
+
+
+
+donde $\tau$ es un parámetro de temperatura que controla la concentración de la distribución de similitudes.  
+
+\vspace{2.5cm}
+Para identificar qué pares deben considerarse positivos, se construye una máscara binaria $M_{ij}$ que marca con 1 las parejas de la misma clase (excepto la comparación consigo misma) y con 0 el resto:
+
+
+\[
+M_{ij} =
+\begin{cases}
+1 & \text{si } y_i = y_j \text{ y } i \neq j, \\
+0 & \text{en otro caso}.
+\end{cases}
+\]
+
+
+
+La pérdida para $i$ se obtiene promediando sobre sus positivos $P(i)$:
+
+
+
+\[
+\ell_i = - \frac{1}{|P(i)|} \sum_{j \in P(i)} \log \left( \frac{\exp(S_{ij})}{\sum_{k \neq i} \exp(S_{ik})} \right),
+\]
+
+
+
+La pérdida total del \textit{batch} es:
+
+
+
+\[
+\mathcal{L}_{\text{SupCon}} = \frac{1}{B} \sum_{i=1}^{B} \ell_i.
+\]
+
+
+
+
+\subsection{Modelo multiclase único}
+
+Como referencia, se entrena el modelo multiclase directo que clasifica todas las lesiones en una sola etapa, sin separación binaria previa. Este enfoque permite comparar el rendimiento global frente al pipeline jerárquico y analizar las ventajas y limitaciones de cada estrategia en la detección de lesiones malignas.

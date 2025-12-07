@@ -1,0 +1,86 @@
+\section{Experiments}
+
+\subsection{Dataset}
+
+Se utilizó el conjunto HAM10000 \cite{Tschandl2018}, compuesto por 10015 imágenes dermatoscópicas correspondientes a 7 tipos de lesiones pigmentadas.  
+La distribución de imágenes por clase es la siguiente:
+
+\vspace{0.5em}
+\begin{table}[!htpb]
+\centering
+\begin{tabularx}{\linewidth}{c X c}
+\toprule
+\textbf{Código} & \textbf{Clase} & \textbf{Número de imágenes} \\
+\midrule
+nv & Nevus (benigno) & 6705 \\
+bkl & Lesión queratósica (benigno) & 1099 \\
+vasc & Lesiones vasculares (benigno) & 142 \\
+df & Dermatofibroma (benigno) & 115 \\
+mel & Melanoma (maligno) & 1113 \\
+bcc & Carcinoma basocelular (maligno) & 514 \\
+akiec & Queratosis actínica / carcinoma epidermoide (maligno) & 327 \\
+\bottomrule
+\end{tabularx}
+\caption{Distribución de imágenes por clase en el \textit{dataset} HAM10000.}
+\label{tab:ham_distribution}
+\end{table}
+\FloatBarrier
+
+
+
+A partir de esta distribución se construyeron tres subconjuntos para los experimentos:
+
+\begin{enumerate}
+    \item \textbf{Subconjunto base}:  
+    Benignas (7919), \textit{mel} (1113), \textit{bcc} (514), \textit{akiec} (327).
+    
+    \item \textbf{Subconjunto binario}:  
+    Benignas (\textit{nv, bkl, vasc, df}) $\rightarrow$ 7919 imágenes.  
+    Malignas (\textit{mel, bcc, akiec}) $\rightarrow$ 2096 imágenes.
+    
+    \item \textbf{Subconjunto multiclase maligno}:  
+    \textit{mel} (1113), \textit{bcc} (514), \textit{akiec} (327).
+\end{enumerate}
+
+\vspace{2cm}
+
+\subsection{Preprocesamiento}
+Las imágenes se redimensionaron a $224 \times 224$ píxeles, se normalizaron en el rango [0,1] y se aplicaron técnicas de aumento de datos: rotaciones, flips horizontales y variaciones de brillo.
+
+Además, dependiendo del modelo, para los preentrenados, se les aplicaba la función de preproceso correspondiente.
+
+
+Para entrenar, los datos se dividieron en 3 conjuntos, manteniendo la distribución de las clases: entrenamiento (85\% imágenes), evaluación (5\% imágenes) y test (10\% imágenes)
+
+\subsection{Pipeline}
+
+\subsubsection{Clasificación binaria}
+Al entrenar los modelos, observamos que tendían a estancarse prediciendo todas las muestras como benignas. 
+Esto generaba un \textit{accuracy} aparentemente alto, pero engañoso, debido al fuerte desequilibrio de clases.
+
+Para mitigar este problema implementamos técnicas de \textit{oversampling}, consiguiendo una mejora del \textit{accuracy} en la clase maligna únicamente en el conjunto de entrenamiento. 
+Sin embargo, este efecto no se trasladó al conjunto de validación, ya que las imágenes generadas para el oversampling eran muy similares entre sí y el modelo terminaba sobreaprendiendo (\textit{overfitting}).
+
+También experimentamos con distintos valores de pesos para las clases para contrarrestar el desbalanceo original, finalmente asignando:
+
+\[
+\text{Benignas} = 0.6212, \quad \text{Malignas} = 2.5623
+\]
+
+
+Esta estrategia ayudó a que el modelo prestara más atención a la clase minoritaria, mejorando mucho las métricas, alcanzando un F1-score de 0.87 en test.
+
+Por último, se probó un \textit{ensemble} con los 3 mejores modelos obtenidos para esta tarea. Pero, como esperabamos, el resultado no mejoró y en cambio, el tiempo computacional fue muy superior.
+
+\subsubsection{Clasificación entre malignas}
+Se empezó buscando un enfoque contrastivo, para poder añadir nuevas clases de manchas malignas sin tener que reentrenar el modelo. Pero al entrenar, nunca llegó a converger, quedándose en el 50\% de \textit{accuracy} al predecir si dos imagenes son de la misma clase o no, es decir, completamente aleatorio.
+
+Por lo que, entrenamos un modelo convolucional que alcanzó un \textit{accuracy} del 81\%, como modelo a batir o por lo menos igualar, pero con la ventaja de la posibilidad de hacer \textit{zero-shot} con el contrastivo.
+
+Por último, se probó la pérdida SupConLoss, que mezcla ambos enfoques. Se consiguió igualar el \textit{accuracy} del modelo convolucional. Pero curiosamente no se consiguió con una red siamesa, que se quedaba en el 60\%, sino con un KNN de los \textit{embeddings}. El KNN se entrenó con las muestras del conjunto de entrenamiento y alcanzó el 82\% en \textit{accuracy} en el conjunto de prueba. Esto probablemente se deba a que para la red siamesa, se intentó obtener el centroide de la clase y comparar el embedding de la imagen con los 3 centroides, determinando cuál era el más parecido. Como los embeddings eran muy dispersos, el centroide no capturaba suficientemente la variabilidad de las clases, disminuyendo el porcentaje de acierto.
+
+
+Al requerir SupConLoss grandes batches, el principal problema que se enfrentó en esta etapa fue la memoria RAM de la gráfica. Obligó a reescalar las imágenes a 128x128 pixeles, y no se pudo probar modelos con transfer learning.
+
+\subsection{Modelo completo}
+Al entrenar un modelo desde cero, el \textit{accuracy} no superaba el 50\%. Probablemente debido a la escasa profundidad de la arquitectura utilizada, que era la misma que se había probado previamente para la clasificación binaria entre muestras malignas y benignas. Por ello, se optó por realizar fine tuning sobre el modelo que mejores resultados obtuvo en la clasifiación binaria, el VGG16. Este modelo mostró una mejora, alcanzando un 68\% de \textit{accuracy}. Aumentar aún más la profundidad no resultaba conveniente, ya que el modelo comenzaba a presentar overfitting al continuar el entrenamiento.

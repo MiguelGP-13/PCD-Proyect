@@ -1,0 +1,12 @@
+\section{Antecedentes}
+
+El diagnóstico de lesiones cutáneas ha cobrado relevancia en los últimos años debido al aumento en la incidencia del cáncer de piel y a la necesidad de herramientas clínicas que complementen la evaluación dermatológica. Las imágenes dermatoscópicas permiten observar estructuras subcutáneas con mayor detalle, pero su interpretación requiere experiencia especializada y puede estar sujeta a variabilidad entre profesionales. En este contexto, los sistemas de aprendizaje profundo han demostrado ser eficaces para asistir en la clasificación de lesiones, mejorando la precisión diagnóstica y reduciendo la carga clínica.
+
+\subsection{Revisión de literatura}
+
+Diversos estudios han explorado el uso de redes neuronales convolucionales (CNN) para la clasificación de lesiones cutáneas. En particular, se han utilizado arquitecturas como ResNet, Inception y EfficientNet para distinguir entre lesiones benignas y malignas, así como para realizar clasificación multiclase sobre tipos específicos de lesiones pigmentadas. Un análisis sistemático reciente destaca que los modelos basados en aprendizaje profundo superan a los métodos tradicionales en tareas de clasificación y detección, especialmente cuando se entrenan con conjuntos de datos como HAM10000 y ISIC \cite{Debelee2023}.
+
+Por otro lado, el aprendizaje contrastivo supervisado ha emergido como una técnica prometedora para mejorar la calidad de los \textit{embeddings} en contextos médicos. Aunque su aplicación en dermatología aún es limitada, estudios recientes han demostrado su utilidad en tareas de segmentación y clasificación en imágenes médicas, permitiendo representar similitudes semánticas entre muestras con mayor fidelidad \cite{Wang2023}. Esta técnica resulta especialmente útil cuando se dispone de datos etiquetados escasos o desequilibrados, como ocurre en muchos escenarios clínicos.
+
+En este trabajo, se propone integrar ambas aproximaciones: una primera etapa de clasificación binaria mediante CNN, seguida de una segunda etapa multiclase basada en aprendizaje contrastivo supervisado, con el objetivo de mejorar la precisión y la interpretabilidad del sistema.
+

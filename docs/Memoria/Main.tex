@@ -1,0 +1,58 @@
+% Packages & Document Configurations
+\documentclass[twocolumn]{NobArticle}
+\runninghead{Un enfoque jerárquico y contrastivo para la clasificación de lesiones cutáneas}
+\footertext{\textit{Proyecto de Ciencia de Datos} (2025)}
+
+% Title
+\title{Un enfoque jerárquico y contrastivo para la clasificación de lesiones cutáneas}
+
+% Authors
+\author{
+    Miguel Gómez Prieto\textsuperscript{1}, 
+    GPT-5
+}
+
+% Affiliations
+\date{
+    \textsuperscript{\textbf{1}}
+    Estudiante CDIA, UPM 
+}
+
+% Abstract
+\renewcommand{\maketitlehookd}{
+\begin{abstract}
+    \noindent Este trabajo aborda la clasificación automática de lesiones cutáneas utilizando el conjunto de datos HAM10000, con especial énfasis en la detección de lesiones malignas, que se encuentran infrarrepresentadas. Se propone un enfoque jerárquico compuesto por una primera etapa binaria (benigno vs. maligno) y una segunda etapa multiclase sobre las lesiones malignas, contrastando su rendimiento frente a un modelo multiclase directo. En la etapa multiclase, se analizan distintos enfoques basados en aprendizaje contrastivo junto con alternativas no contrastivas y diversas estrategias de entrenamiento, con el objetivo de evaluar su eficacia en la generación de representaciones discriminativas. Para aportar interpretabilidad, se incorpora Grad-CAM, que permite identificar las regiones más relevantes en las predicciones. Un aspecto central del trabajo es el tratamiento del desbalanceo de clases, mediante técnicas de reponderación y aumento de datos, con el fin de mitigar la disparidad entre categorías y mejorar la robustez del modelo. Los resultados muestran que la combinación de estrategias contrastivas y equilibrio de clases contribuye a una clasificación más precisa y confiable, ofreciendo una solución escalable e interpretable con potencial relevancia clínica.
+    \medskip
+    
+    \small{\textbf{Index Terms:} Clasificación de lesiones cutáneas, Aprendizaje contrastivo, Balanceo de clases, Grad-CAM, Diagnóstico asistido por ordenador (CAD)}
+\end{abstract}
+
+}
+
+\begin{document}
+
+\small
+\maketitle
+
+\input{Sections/01-Introduction}
+\input{Sections/02-Background}
+\input{Sections/03-Methods}
+\input{Sections/04-Experiments}
+\input{Sections/05-Results}
+\input{Sections/06-Discussion}
+\input{Sections/07-Conclusion}
+
+\section*{Agradecimientos}
+Se agradece a Kaggle y a los creadores del \textit{dataset} HAM10000 por poner a disposición los datos y por ofrecer un entorno con gráficas que facilitó el entrenamiento y análisis de los modelos. 
+
+Se reconoce también el respaldo de la Universidad Politécnica de Madrid por el entorno académico y los recursos brindados. 
+
+Se expresa gratitud a la comunidad de software libre, en especial a los desarrolladores de librerías como \textit{Tensorflow}, scikit-learn y otras herramientas que hicieron posible la implementación de este trabajo. Asimismo, se agradece a plataformas como GitHub y Overleaf, así como a José Areia por la plantilla de LaTeX \textit{NobArticle}, que facilitaron la documentación, organización y maquetación del proyecto. 
+
+Finalmente, se reconoce la enseñanza del Profesor Jesús Bobadilla, en el curso de PCD de la ETSISI-UPM, que proporcionó el marco académico adecuado para la realización de esta investigación.
+
+
+\vspace{20cm}
+\printbibliography
+
+\end{document}
